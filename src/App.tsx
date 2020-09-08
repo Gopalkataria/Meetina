@@ -3,13 +3,13 @@ import "./App.css";
 import {
 	AppBar,
 	Toolbar,
-	IconButton,
 	Typography,
 	Container,
 	createMuiTheme,
 	ThemeProvider,
 	CssBaseline,
 	Box,
+	Icon,
 } from "@material-ui/core";
 import { Spa } from "@material-ui/icons";
 import Home from "./Home/Home";
@@ -35,12 +35,13 @@ function App() {
 			<CssBaseline />
 			<AppBar position='sticky'>
 				<Toolbar>
-					<IconButton color='secondary' edge={"start"}>
-						<Spa />
-					</IconButton>
-					<Typography color='textPrimary' variant='h4'>
-						Meetina
-					</Typography>
+					<Icon component={Spa} color='secondary'></Icon>
+
+					<Box pl={3}>
+						<Typography color='textPrimary' variant='h4'>
+							Meetina
+						</Typography>
+					</Box>
 				</Toolbar>
 			</AppBar>
 			<CssBaseline />
