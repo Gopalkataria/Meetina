@@ -1,15 +1,26 @@
 export interface Meet {
 	name: string;
+	description?: string;
 	url: string;
+
 	uid: number;
 }
 export function getData() {
 	const rawData = localStorage.getItem("meetings");
 	let data: Meet[];
-	if (rawData !== null) {
-		data = JSON.parse(rawData);
+
+	if (rawData === "[]" || rawData === null) {
+		data = [
+			{
+				name: "welcome",
+				description:
+					"Add your first meeting by clicking the add button in lower right of the screen",
+				url: "",
+				uid: 1,
+			},
+		];
 	} else {
-		data = [{ name: "welcome", url: "", uid: 1 }];
+		data = JSON.parse(rawData);
 	}
 	return data;
 }

@@ -15,11 +15,17 @@ import {
 	TextField,
 	DialogActions,
 	Button,
+	CardHeader,
+	IconButton,
 } from "@material-ui/core";
+import { red } from "@material-ui/core/colors";
 import { getData, Meet, saveData } from "../scripts/data-storage";
 import "./Home.css";
 
-import { AddSharp } from "@material-ui/icons";
+import { AddSharp, DeleteSharp } from "@material-ui/icons";
+
+//eslint-disable-next-line
+const URL_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(:[0-9]+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
 export default function Home() {
 	const theme = createMuiTheme({
@@ -38,18 +44,29 @@ export default function Home() {
 	});
 
 	const [dialogOpen, setDialogOpen] = useState(false);
-	let newMeetName = "",
-		newMeetUrl = "";
+
+	const [newMeetName, setNewMeetName] = useState("");
+	const [newMeetDescription, setNewMeetDescription] = useState("");
+	const [newMeetUrl, setNewMeetUrl] = useState("");
 
 	const handleDialogClose = () => {
 		setDialogOpen(false);
 	};
 	const handleDialogSaveAndClose = () => {
 		let time = new Date();
-		let newMeetings = [...Meetings, { name: newMeetName, url: newMeetUrl, uid: time.getTime() }];
+		let newMeetings = [
+			...Meetings,
+			{ name: newMeetName, url: newMeetUrl, description: newMeetDescription, uid: time.getTime() },
+		];
 		setMeetings(newMeetings);
 		saveData(newMeetings);
 		handleDialogClose();
+	};
+
+	const deleteMeet = (uid: number) => {
+		let newMeetings = Meetings.filter((meet) => meet.uid !== uid);
+		setMeetings(newMeetings);
+		saveData(newMeetings);
 	};
 
 	const handleDialogOpen = () => {
@@ -69,11 +86,24 @@ export default function Home() {
 						<Grid key={meeting.uid} item xs={12} sm={12} md={6}>
 							<Box>
 								<Card elevation={2}>
+									<CardHeader
+										title={meeting.name}
+										action={
+											<IconButton
+												style={{ color: red[500] }}
+												onClick={() => deleteMeet(meeting.uid)}
+												aria-label='meeting options'>
+												<DeleteSharp />
+											</IconButton>
+										}
+									/>
 									<CardContent>
-										<Typography variant='body1'>{meeting.name}</Typography>
-										<Link href={meeting.url} color='primary'>
-											{meeting.url}
-										</Link>
+										<Typography variant='body1'>{meeting.description}</Typography>
+										<Typography variant='h6'>
+											<Link href={meeting.url} color='primary'>
+												{meeting.url}
+											</Link>
+										</Typography>
 									</CardContent>
 								</Card>
 							</Box>
@@ -90,19 +120,29 @@ export default function Home() {
 					<DialogTitle id='new-meeting-dialog'>Add Meeting</DialogTitle>
 					<DialogContent>
 						<TextField
-							onChange={(evt) => {
-								newMeetName = evt.target.value;
+							onBlur={(evt) => {
+								setNewMeetName(evt.target.value);
 							}}
 							autoFocus
 							label='Meeting Name'
 							fullWidth
 							type='text'
 						/>
+						<TextField
+							onBlur={(evt) => {
+								setNewMeetDescription(evt.target.value);
+							}}
+							multiline
+							label='Meeting Description (optional)'
+							fullWidth
+							type='text'
+						/>
 
 						<TextField
 							onChange={(evt) => {
-								newMeetUrl = evt.target.value;
+								setNewMeetUrl(evt.target.value);
 							}}
+							error={!URL_REGEX.test(newMeetUrl) && newMeetUrl !== ""}
 							label='Meeting URL'
 							fullWidth
 							type='url'
@@ -110,7 +150,11 @@ export default function Home() {
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={handleDialogClose}>Cancel</Button>
-						<Button variant='contained' color='secondary' onClick={handleDialogSaveAndClose}>
+						<Button
+							disabled={newMeetUrl === "" || newMeetName === ""}
+							variant='contained'
+							color='secondary'
+							onClick={handleDialogSaveAndClose}>
 							Save
 						</Button>
 					</DialogActions>
