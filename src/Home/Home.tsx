@@ -27,6 +27,33 @@ import { AddSharp, DeleteSharp } from "@material-ui/icons";
 //eslint-disable-next-line
 const URL_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+(:[0-9]+)?|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
+// function NewMeetingDialogContents(props: any) {
+// 	return (
+// 		<div>
+// 			<DialogContent>
+// 				<TextField autoFocus label='Meeting Name' fullWidth type='text' />
+// 				<TextField multiline label='Meeting Description (optional)' fullWidth type='text' />
+
+// 				<TextField
+// 					// error={!URL_REGEX.test(newMeetUrl) && newMeetUrl !== ""}
+// 					label='Meeting URL'
+// 					fullWidth
+// 					type='url'
+// 				/>
+// 			</DialogContent>
+// 			<DialogActions>
+// 				<Button onClick={handleDialogClose}>Cancel</Button>
+// 				<Button
+// 					disabled={newMeetUrl === "" || newMeetName === ""}
+// 					variant='contained'
+// 					color='secondary'
+// 					onClick={handleDialogSaveAndClose}>
+// 					Save  </Button>
+// 			</DialogActions>
+// 		</div>
+// 	);
+// }
+
 export default function Home() {
 	const theme = createMuiTheme({
 		// carefully curated set of theme colors and fonts, don't change anything here
@@ -45,25 +72,28 @@ export default function Home() {
 
 	const [dialogOpen, setDialogOpen] = useState(false);
 
-	const [newMeetName, setNewMeetName] = useState("");
-	const [newMeetDescription, setNewMeetDescription] = useState("");
-	const [newMeetUrl, setNewMeetUrl] = useState("");
+	const [newMeet, setnewMeet] = useState<Meet>({ name: "", url: "", description: "", uid: 0 });
 
 	const handleDialogClose = () => {
 		setDialogOpen(false);
 	};
-	const handleDialogSaveAndClose = () => {
+	const handleDialogSaveAndClose = (newMeet: Meet) => {
 		let time = new Date();
 		let newMeetings = [
 			...Meetings,
-			{ name: newMeetName, url: newMeetUrl, description: newMeetDescription, uid: time.getTime() },
+			{
+				name: newMeet.name,
+				url: newMeet.url,
+				description: newMeet.description,
+				uid: time.getTime(),
+			},
 		];
 		setMeetings(newMeetings);
 		saveData(newMeetings);
 		handleDialogClose();
 	};
 
-	const deleteMeet = (uid: number) => {
+	const deleteMeet = (uid: number, Meetings: Meet[]) => {
 		let newMeetings = Meetings.filter((meet) => meet.uid !== uid);
 		setMeetings(newMeetings);
 		saveData(newMeetings);
@@ -78,9 +108,6 @@ export default function Home() {
 	return (
 		<ThemeProvider theme={theme}>
 			<Grid container spacing={3} direction='row' justify='center' alignItems='center'>
-				<Fab color='secondary' aria-label='add-meeting' onClick={handleDialogOpen} className='fab'>
-					<AddSharp></AddSharp>
-				</Fab>
 				{Meetings.map((meeting) => {
 					return (
 						<Grid key={meeting.uid} item xs={12} sm={12} md={6}>
@@ -91,7 +118,7 @@ export default function Home() {
 										action={
 											<IconButton
 												style={{ color: red[500] }}
-												onClick={() => deleteMeet(meeting.uid)}
+												onClick={() => deleteMeet(meeting.uid, Meetings)}
 												aria-label='meeting options'>
 												<DeleteSharp />
 											</IconButton>
@@ -111,6 +138,10 @@ export default function Home() {
 					);
 				})}
 
+				<Fab color='secondary' aria-label='add-meeting' onClick={handleDialogOpen} className='fab'>
+					<AddSharp></AddSharp>
+				</Fab>
+
 				<Dialog
 					open={dialogOpen}
 					fullWidth
@@ -121,7 +152,10 @@ export default function Home() {
 					<DialogContent>
 						<TextField
 							onBlur={(evt) => {
-								setNewMeetName(evt.target.value);
+								let newMeetCopy = Object.assign({}, newMeet);
+
+								newMeetCopy.name = evt.target.value;
+								setnewMeet(newMeetCopy);
 							}}
 							autoFocus
 							label='Meeting Name'
@@ -130,7 +164,10 @@ export default function Home() {
 						/>
 						<TextField
 							onBlur={(evt) => {
-								setNewMeetDescription(evt.target.value);
+								let newMeetCopy = Object.assign({}, newMeet);
+
+								newMeetCopy.description = evt.target.value;
+								setnewMeet(newMeetCopy);
 							}}
 							multiline
 							label='Meeting Description (optional)'
@@ -140,9 +177,12 @@ export default function Home() {
 
 						<TextField
 							onChange={(evt) => {
-								setNewMeetUrl(evt.target.value);
+								let newMeetCopy = Object.assign({}, newMeet);
+
+								newMeetCopy.url = evt.target.value;
+								setnewMeet(newMeetCopy);
 							}}
-							error={!URL_REGEX.test(newMeetUrl) && newMeetUrl !== ""}
+							error={!URL_REGEX.test(newMeet.url) && newMeet.url !== ""}
 							label='Meeting URL'
 							fullWidth
 							type='url'
@@ -151,10 +191,12 @@ export default function Home() {
 					<DialogActions>
 						<Button onClick={handleDialogClose}>Cancel</Button>
 						<Button
-							disabled={newMeetUrl === "" || newMeetName === ""}
+							disabled={newMeet.url === "" || newMeet.name === ""}
 							variant='contained'
 							color='secondary'
-							onClick={handleDialogSaveAndClose}>
+							onClick={() => {
+								handleDialogSaveAndClose(newMeet);
+							}}>
 							Save
 						</Button>
 					</DialogActions>
