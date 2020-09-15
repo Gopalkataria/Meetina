@@ -106,7 +106,7 @@ export default function Home() {
 
 	const [dialogOpen, setDialogOpen] = useState(false);
 
-	const [newMeet, setnewMeet] = useState<Meet>({ name: "", url: "", description: "", uid: 0 });
+	const [newMeet, setNewMeet] = useState<Meet>({ name: "", url: "", description: "", uid: 0 });
 
 	const handleDialogClose = () => {
 		setDialogOpen(false);
@@ -114,7 +114,7 @@ export default function Home() {
 	const handleDialogSaveAndClose = (newMeet: Meet) => {
 		let time = new Date();
 		let newMeetings = [
-			...Meetings,
+			...meetings,
 			{
 				name: newMeet.name,
 				url: newMeet.url,
@@ -134,7 +134,7 @@ export default function Home() {
 		saveData(newMeetings);
 	};
 	const editMeet = (uid: number, Meetings: Meet[]) => {
-		setnewMeet(Meetings.filter((meet) => meet.uid === uid)[0]);
+		setNewMeet(Meetings.filter((meet) => meet.uid === uid)[0]);
 		setDialogOpen(true);
 		let newMeetings = Meetings.filter((meet) => meet.uid !== uid);
 		setMeetings(newMeetings);
@@ -142,17 +142,17 @@ export default function Home() {
 	};
 
 	const handleDialogOpen = () => {
-		setnewMeet({ name: "", description: "", url: "", uid: 0 });
+		setNewMeet({ name: "", description: "", url: "", uid: 0 });
 		setDialogOpen(true);
 	};
 
-	const [Meetings, setMeetings] = useState<Meet[]>(getData());
+	const [meetings, setMeetings] = useState<Meet[]>(getData());
 
 	return (
 		<ThemeProvider theme={theme}>
 			<Box mb={6} pb={6}>
 				<Grid container spacing={3} direction='row' justify='center' alignItems='center'>
-					{Meetings.map((meeting) => {
+					{meetings.map((meeting) => {
 						return (
 							<Grid key={meeting.uid} item xs={12} sm={12} md={6}>
 								<Box>
@@ -163,14 +163,14 @@ export default function Home() {
 												<span>
 													<IconButton
 														style={{ color: red[500] }}
-														onClick={() => deleteMeet(meeting.uid, Meetings)}
+														onClick={() => deleteMeet(meeting.uid, meetings)}
 														aria-label='meeting options'>
 														<DeleteSharp />
 													</IconButton>
 
 													<IconButton
 														style={{ color: blue[500] }}
-														onClick={() => editMeet(meeting.uid, Meetings)}
+														onClick={() => editMeet(meeting.uid, meetings)}
 														aria-label='meeting options'>
 														<EditSharp />
 													</IconButton>
@@ -208,7 +208,7 @@ export default function Home() {
 					handleDialogClose={handleDialogClose}
 					handleDialogSaveAndClose={handleDialogSaveAndClose}
 					newMeet={newMeet}
-					setnewMeet={setnewMeet}
+					setnewMeet={setNewMeet}
 				/>
 			</Dialog>
 		</ThemeProvider>
