@@ -125,8 +125,8 @@ export default function Home() {
 										}
 									/>
 									<CardContent>
-										<Typography variant='body1'>{meeting.description}</Typography>
-										<Typography variant='h6'>
+										<Typography variant='h5'>{meeting.description}</Typography>
+										<Typography variant='h5'>
 											<Link href={meeting.url} color='primary'>
 												{meeting.url}
 											</Link>
