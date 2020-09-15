@@ -38,11 +38,11 @@ function NewMeetingDialogContents(props: any) {
 						newMeetCopy.name = evt.target.value;
 						props.setnewMeet(newMeetCopy);
 					}}
-					value={props.newMeet.name}
 					autoFocus
 					label='Meeting Name'
 					fullWidth
 					type='text'
+					inputProps={{ defaultValue: props.newMeet.name }}
 				/>
 				<TextField
 					onBlur={(evt) => {
@@ -51,11 +51,11 @@ function NewMeetingDialogContents(props: any) {
 						newMeetCopy.description = evt.target.value;
 						props.setnewMeet(newMeetCopy);
 					}}
-					value={props.newMeet.description}
 					multiline
 					label='Meeting Description (optional)'
 					fullWidth
 					type='text'
+					inputProps={{ defaultValue: props.newMeet.description }}
 				/>
 
 				<TextField
@@ -65,11 +65,11 @@ function NewMeetingDialogContents(props: any) {
 						newMeetCopy.url = evt.target.value;
 						props.setnewMeet(newMeetCopy);
 					}}
-					value={props.newMeet.url}
 					error={!URL_REGEX.test(props.newMeet.url) && props.newMeet.url !== ""}
 					label='Meeting URL'
 					fullWidth
 					type='url'
+					inputProps={{ defaultValue: props.newMeet.url }}
 				/>
 			</DialogContent>
 			<DialogActions>
