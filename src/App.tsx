@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import {
 	AppBar,
@@ -42,7 +42,7 @@ function App() {
 					<Box pl={3}>
 						<Typography color='textPrimary' variant='h4'>
 							Meetina
-							</Typography>
+						</Typography>
 					</Box>
 				</Toolbar>
 			</AppBar>
@@ -51,12 +51,11 @@ function App() {
 				<Container>
 					<Router>
 						<Switch>
-							<Route path="/">
-
-							<Home />
+							<Route path='/'>
+								<Home />
 							</Route>
-							<Route path="\accounts">
-								<Accounts/>
+							<Route path='/accounts'>
+								<Accounts />
 							</Route>
 						</Switch>
 					</Router>

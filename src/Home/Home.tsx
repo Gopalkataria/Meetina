@@ -39,15 +39,13 @@ function NewMeetingDialogContents(props: {
 	const [newMeet, setNewMeet] = useState<Meet>(
     Object.assign({}, props.newMeet)
   );
-  let _newMeet = Object.assign({}, props.newMeet);
 
   return (
 		<div>
 			<DialogContent>
 				<TextField
-					onChange={(evt) => {
-						_newMeet.name = evt.target.value;
-						setNewMeet(_newMeet);
+					onBlur={(evt) => {
+            setNewMeet({ ...newMeet , name: evt.target.value }) ;
 					}}
 					autoFocus
 					label='Meeting Name'
@@ -56,9 +54,8 @@ function NewMeetingDialogContents(props: {
 					inputProps={{ defaultValue: props.newMeet.name }}
 				/>
 				<TextField
-					onChange={(evt) => {
-						_newMeet.description = evt.target.value;
-						setNewMeet(_newMeet);
+					onBlur={(evt) => {
+            setNewMeet( { ...newMeet, description :  evt.target.value });
 					}}
 					multiline
 					label='Meeting Description (optional)'
@@ -70,10 +67,9 @@ function NewMeetingDialogContents(props: {
 				<TextField
           onChange={(evt) => {
 
-						_newMeet.url = evt.target.value;
-						setNewMeet(_newMeet);
+						setNewMeet({ ...newMeet, url: evt.target.value });
 					}}
-					error={!URL_REGEX.test(props.newMeet.url) && props.newMeet.url !== ""}
+					error={!URL_REGEX.test(newMeet.url) && newMeet.url !== ""}
 					label='Meeting URL'
 					fullWidth
 					type='url'
@@ -97,9 +93,7 @@ function NewMeetingDialogContents(props: {
 					disabled={newMeet.url === ""}
 					variant='contained'
 					color='secondary'
-          onClick={() => {
-            console.log(_newMeet) ;
-            props.setNewMeet(_newMeet);
+					onClick={() => {
 
 						props.handleDialogSaveAndClose(newMeet);
 					}}>
@@ -219,7 +213,7 @@ export default function Home() {
                         {meeting.description}
                       </Typography>
                       <Typography variant="h6">
-                        <Link href={"https://meet.google.com" + meeting.url} target="_blank" color="primary">
+                        <Link href={"https://meet.google.com/" + meeting.url} target="_blank" color="primary">
                           {meeting.url}
                         </Link>
                       </Typography>
