@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 import {
 	AppBar,
@@ -13,6 +14,7 @@ import {
 } from "@material-ui/core";
 import { Spa } from "@material-ui/icons";
 import Home from "./Home/Home";
+import Accounts from "./Accounts/Accounts";
 
 function App() {
 	const appBarTheme = createMuiTheme({
@@ -40,14 +42,24 @@ function App() {
 					<Box pl={3}>
 						<Typography color='textPrimary' variant='h4'>
 							Meetina
-						</Typography>
+							</Typography>
 					</Box>
 				</Toolbar>
 			</AppBar>
 			<CssBaseline />
 			<Box mt={6}>
 				<Container>
-					<Home />
+					<Router>
+						<Switch>
+							<Route path="/">
+
+							<Home />
+							</Route>
+							<Route path="\accounts">
+								<Accounts/>
+							</Route>
+						</Switch>
+					</Router>
 				</Container>
 			</Box>
 		</ThemeProvider>

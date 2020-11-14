@@ -42,70 +42,72 @@ function NewMeetingDialogContents(props: {
   let _newMeet = Object.assign({}, props.newMeet);
 
   return (
-    <div>
-      <DialogContent>
-        <TextField
-          onBlur={(evt) => {
-					  _newMeet.name = evt.target.value;
-					  setNewMeet(_newMeet);
-          }}
-          autoFocus
-          label="Meeting Name"
-          fullWidth
-          type="text"
-          inputProps={{ defaultValue: props.newMeet.name }}
-        />
-        <TextField
-          onBlur={(evt) => {
-            _newMeet.description = evt.target.value;
-            setNewMeet(_newMeet);
-          }}
-          multiline
-          label="Meeting Description (optional)"
-          fullWidth
-          type="text"
-          inputProps={{ defaultValue: props.newMeet.description }}
-        />
+		<div>
+			<DialogContent>
+				<TextField
+					onChange={(evt) => {
+						_newMeet.name = evt.target.value;
+						setNewMeet(_newMeet);
+					}}
+					autoFocus
+					label='Meeting Name'
+					fullWidth
+					type='text'
+					inputProps={{ defaultValue: props.newMeet.name }}
+				/>
+				<TextField
+					onChange={(evt) => {
+						_newMeet.description = evt.target.value;
+						setNewMeet(_newMeet);
+					}}
+					multiline
+					label='Meeting Description (optional)'
+					fullWidth
+					type='text'
+					inputProps={{ defaultValue: props.newMeet.description }}
+				/>
 
-        <TextField
+				<TextField
           onChange={(evt) => {
-            _newMeet.url = evt.target.value;
-            setNewMeet(_newMeet);
-          }}
-          error={!URL_REGEX.test(props.newMeet.url) && props.newMeet.url !== ""}
-          label="Meeting URL"
-          fullWidth
-          type="url"
-          inputProps={{ defaultValue: props.newMeet.url }}
-        />
-      </DialogContent>
 
-      <DialogActions>
-        <Button
-          onClick={
-            props.editMode
-              ? () => {
-                  props.handleDialogSaveAndClose(props.newMeet);
-                }
-              : props.handleDialogClose
-          }
-        >
-          Cancel
-        </Button>
-        <Button
-          disabled={ newMeet.url === ""}
-          variant="contained"
-          color="secondary"
+						_newMeet.url = evt.target.value;
+						setNewMeet(_newMeet);
+					}}
+					error={!URL_REGEX.test(props.newMeet.url) && props.newMeet.url !== ""}
+					label='Meeting URL'
+					fullWidth
+					type='url'
+					inputProps={{ defaultValue: props.newMeet.url }}
+				/>
+			</DialogContent>
+
+			<DialogActions>
+				<Button
+					onClick={
+						props.editMode
+							? () => {
+									props.handleDialogSaveAndClose(props.newMeet);
+							  }
+							: props.handleDialogClose
+					}>
+					Cancel
+				</Button>
+
+				<Button
+					disabled={newMeet.url === ""}
+					variant='contained'
+					color='secondary'
           onClick={() => {
+            console.log(_newMeet) ;
             props.setNewMeet(_newMeet);
-            props.handleDialogSaveAndClose(newMeet);
-          }}
-        >
-          Save
-        </Button>
-      </DialogActions>
-    </div>
-  );
+
+						props.handleDialogSaveAndClose(newMeet);
+					}}>
+					Save
+				</Button>
+			</DialogActions>
+		</div>
+	);
 }
 
 export default function Home() {
