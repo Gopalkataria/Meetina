@@ -1,3 +1,12 @@
+// the home page with all the meetings
+// meeting can be edited , removed here itself ,
+
+// links to all main pages here in app menu
+
+
+
+
+
 import React, { useState } from "react";
 import {
   Grid,
@@ -172,85 +181,73 @@ export default function Home() {
   const [meetings, setMeetings] = useState<Meet[]>(getData());
 
   return (
-    <ThemeProvider theme={theme}>
-      <Box mb={6} pb={6}>
-        <Grid
-          container
-          spacing={3}
-          direction="row"
-          justify="center"
-          alignItems="center"
-        >
-          {meetings.map((meeting) => {
-            return (
-              <Grid key={meeting.uid} item xs={12} sm={12} md={6}>
-                <Box>
-                  <Card elevation={2}>
-                    <CardHeader
-                      title={meeting.name}
-                      action={
-                        <span>
-                          <IconButton
-                            style={{ color: red[600] }}
-                            onClick={() => deleteMeet(meeting.uid, meetings)}
-                            aria-label="meeting options"
-                          >
+		<ThemeProvider theme={theme}>
+			<Box mb={6} pb={6}>
+				<Grid container spacing={3} direction='row' justify='center' alignItems='center'>
+					{meetings.map((meeting) => {
+						return (
+							<Grid key={meeting.uid} item xs={12} sm={12} md={6}>
+								<Box>
+									<Card elevation={2}>
+										<CardHeader
+											title={meeting.name}
+											action={
+												<span>
+													<IconButton
+														style={{ color: red[600] }}
+														onClick={() => deleteMeet(meeting.uid, meetings)}
+														aria-label='meeting options'>
                             <DeleteSharp />
-                          </IconButton>
+                            {/*  todo add delete warning  */}
+													</IconButton>
 
-                          <IconButton
-                            style={{ color: blue[600] }}
-                            onClick={() => editMeet(meeting.uid, meetings)}
-                            aria-label="meeting options"
-                          >
-                            <EditSharp />
-                          </IconButton>
-                        </span>
-                      }
-                    />
-                    <CardContent>
-                      <Typography variant="body1">
-                        {meeting.description}
-                      </Typography>
-                      <Typography variant="h6">
-                        <Link href={"https://meet.google.com/" + meeting.url} target="_blank" color="primary">
-                          {meeting.url}
-                        </Link>
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Box>
-              </Grid>
-            );
-          })}
-        </Grid>
-      </Box>
+													<IconButton
+														style={{ color: blue[600] }}
+														onClick={() => editMeet(meeting.uid, meetings)}
+														aria-label='meeting options'>
+														<EditSharp />
+													</IconButton>
+												</span>
+											}
+										/>
+										<CardContent>
+											<Typography variant='body1'>{meeting.description}</Typography>
+											<Typography variant='h6'>
+												<Link
+													href={"https://meet.google.com/" + meeting.url}
+													target='_blank'
+													color='primary'>
+													{meeting.url}
+												</Link>
+											</Typography>
+										</CardContent>
+									</Card>
+								</Box>
+							</Grid>
+						);
+					})}
+				</Grid>
+			</Box>
 
-      <Fab
-        color="secondary"
-        aria-label="add-meeting"
-        onClick={handleDialogOpen}
-        className="fab"
-      >
-        <AddSharp></AddSharp>
-      </Fab>
+			<Fab color='secondary' aria-label='add-meeting' onClick={handleDialogOpen} className='fab'>
+				<AddSharp></AddSharp>
+			</Fab>
 
-      <Dialog
-        open={dialogOpen}
-        fullWidth
-        maxWidth="md"
-        aria-labelledby="new-meeting"
-        onClose={handleDialogClose}
-      >
-        <DialogTitle id="new-meeting-dialog">Add Meeting</DialogTitle>
-        <NewMeetingDialogContents
-          handleDialogClose={handleDialogClose}
-          handleDialogSaveAndClose={handleDialogSaveAndClose}
-          newMeet={newMeet}
-          setNewMeet={setNewMeet}
-          editMode={editMode}
-        />
-      </Dialog>
-    </ThemeProvider>
-  );
+			<Dialog
+				open={dialogOpen}
+				fullWidth
+				maxWidth='md'
+				aria-labelledby='new-meeting'
+				onClose={handleDialogClose}>
+				<DialogTitle id='new-meeting-dialog'>Add or Edit Meeting</DialogTitle>
+				<NewMeetingDialogContents
+					handleDialogClose={handleDialogClose}
+					handleDialogSaveAndClose={handleDialogSaveAndClose}
+					newMeet={newMeet}
+					setNewMeet={setNewMeet}
+					editMode={editMode}
+				/>
+			</Dialog>
+		</ThemeProvider>
+	);
 }
