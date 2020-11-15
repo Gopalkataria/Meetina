@@ -15,7 +15,6 @@ export default function Accounts() {
 			{" "}
 			<Box mb={6} pb={6} alignContent='center' justifyContent='center'>
 				<Typography color='textPrimary' variant='h2' align='center'>
-					{" "}
 					Work in Progress 🚧🏗{" "}
 					{/*  todo :
 				  add firebase auth ui and test

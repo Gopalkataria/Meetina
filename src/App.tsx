@@ -54,11 +54,11 @@ function App() {
 				<Container>
 					<Router>
 						<Switch>
-							<Route path='/'>
-								<Home />
-							</Route>
 							<Route path='/accounts'>
 								<Accounts />
+							</Route>
+							<Route path='/'>
+								<Home />
 							</Route>
 						</Switch>
 					</Router>
