@@ -34,7 +34,7 @@ import "./Home.css";
 import { AddSharp, EditSharp, DeleteSharp } from "@material-ui/icons";
 
 //eslint-disable-next-line
-const URL_REGEX = /[a-zA-Z]{3}-?[a-zA-Z]{4}-?[a-zA-Z]{3}/gm ; 
+const URL_REGEX = /[a-zA-Z]{3}-?[a-zA-Z]{4}-?[a-zA-Z]{3}/ ; 
 
 
 function NewMeetingDialogContents(props: {
