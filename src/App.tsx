@@ -44,7 +44,7 @@ function App() {
 
 					<Box pl={3}>
 						<Typography color='textPrimary' variant='h4'>
-							Meetina
+							Meeting Links
 						</Typography>
 					</Box>
 				</Toolbar>
