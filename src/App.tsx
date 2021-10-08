@@ -22,16 +22,15 @@ import Accounts from "./Accounts/Accounts";
 function App() {
 	const appBarTheme = createMuiTheme({
 		palette: {
-			text: {
-				primary: "#053342",
-			},
-			primary: {
-				main: "#ffffff",
-				contrastText: "#053342",
-			},
-			secondary: {
-				main: "#053342",
-			},
+			type : "dark" , // uncomment this line to switch to dark mode
+
+      primary: {
+        main: "#673AB7",
+        contrastText: "#053342",
+      },
+      secondary: {
+        main: "#053342",
+      },
 		},
 	});
 
