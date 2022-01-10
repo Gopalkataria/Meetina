@@ -25,7 +25,7 @@ function App() {
 	// type : "dark" , // uncomment this line to switch to dark mode
 
       primary: {
-        main: "#673AB7",
+        main: "#ffffff",
         contrastText: "#053342",
       },
       secondary: {
