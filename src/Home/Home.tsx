@@ -118,7 +118,7 @@ export default function Home() {
   const theme = createMuiTheme({
     // carefully curated set of theme colors and fonts, don't change anything here
     palette: {
-       type : "dark" , // uncomment this line to switch to dark mode
+     //  type : "dark" , // uncomment this line to switch to dark mode
 
       primary: {
         main: "#673AB7",
