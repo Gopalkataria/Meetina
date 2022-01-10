@@ -22,7 +22,7 @@ import Accounts from "./Accounts/Accounts";
 function App() {
 	const appBarTheme = createMuiTheme({
 		palette: {
-			type : "dark" , // uncomment this line to switch to dark mode
+	// type : "dark" , // uncomment this line to switch to dark mode
 
       primary: {
         main: "#673AB7",
