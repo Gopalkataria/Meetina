@@ -15,7 +15,7 @@ import {
 	Box,
 	Icon,
 } from "@material-ui/core";
-import { Spa } from "@material-ui/icons";
+import { GroupsIcon  } from "@material-ui/icons";
 import Home from "./Home/Home";
 import Accounts from "./Accounts/Accounts";
 
@@ -39,11 +39,11 @@ function App() {
 			<CssBaseline />
 			<AppBar position='sticky'>
 				<Toolbar>
-					<Icon component={Spa} color='secondary'></Icon>
+					<Icon component={GroupsIcon} color='secondary'></Icon>
 
 					<Box pl={3}>
 						<Typography color='textPrimary' variant='h4'>
-							Meeting Links
+							Google Meet links
 						</Typography>
 					</Box>
 				</Toolbar>
