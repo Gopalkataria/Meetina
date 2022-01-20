@@ -80,7 +80,7 @@ function NewMeetingDialogContents(props: {
 						setNewMeet({ ...newMeet, url: evt.target.value });
 					}}
 					error={!URL_REGEX.test(newMeet.url) && newMeet.url !== ""}
-					label='Meeting URL'
+					label='Google Meet Code'
 					fullWidth
 					type='url'
 					inputProps={{ defaultValue: props.newMeet.url }}
