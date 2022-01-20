@@ -15,7 +15,7 @@ import {
 	Box,
 	Icon,
 } from "@material-ui/core";
-import { GroupsIcon  } from "@material-ui/icons";
+import { Groups  } from "@material-ui/icons";
 import Home from "./Home/Home";
 import Accounts from "./Accounts/Accounts";
 
@@ -39,7 +39,7 @@ function App() {
 			<CssBaseline />
 			<AppBar position='sticky'>
 				<Toolbar>
-					<Icon component={GroupsIcon} color='secondary'></Icon>
+					<Icon component={Groups} color='secondary'></Icon>
 
 					<Box pl={3}>
 						<Typography color='textPrimary' variant='h4'>
